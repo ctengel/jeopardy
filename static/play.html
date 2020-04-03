@@ -16,11 +16,8 @@ xhr.onload = function() {
 if (this.status == 200) {
     var node;
     var textnode;
-    var disptime;
-    var x = this.response;
       node = document.getElementById('status');
-      disptime = new Date(x['datetime'])
-      textnode = document.createTextNode("Successful buzz at " + disptime.getHours().toString().padStart(2, '0') + ':' + disptime.getMinutes().toString().padStart(2, '0') + ':' + disptime.getSeconds().toString().padStart(2, '0') + '.' + disptime.getMilliseconds().toString().padStart(3, '0'));
+      textnode = document.createTextNode("Successful buzz at " + time2read(this.response['datetime']);
       node.replaceChild(textnode, node.childNodes[0]);
   }
 };

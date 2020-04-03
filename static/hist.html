@@ -4,6 +4,7 @@
 <head>
  <title>History</title>
  <script src="config.js"></script>
+ <script src="common.js"></script>
 	<script>
 
 function doit() {
@@ -13,16 +14,8 @@ xhr.responseType = 'json';
 
 xhr.onload = function() {
   if (this.status == 200) {
-    var node;
-    var textnode;
-    var disptime;
     for (x of this.response['items']) {
-      node = document.createElement('li');
-      disptime = new Date(x['datetime'])
-      textnode = document.createTextNode(disptime.getHours().toString().padStart(2, '0') + ':' + disptime.getMinutes().toString().padStart(2, '0') + ':' + disptime.getSeconds().toString().padStart(2, '0') + '.' + disptime.getMilliseconds().toString().padStart(3, '0') + ' - ' + x['person']);
-      node.appendChild(textnode);
-      document.getElementById('buzzes').appendChild(node);
-      since = x['datetime'];
+	    processbuzz(x);
     }
   }
 };
