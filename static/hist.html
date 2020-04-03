@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+ <title>History</title>
+ <script src="config.js"></script>
+	<script>
+
+function doit() {
+var xhr = new XMLHttpRequest();
+xhr.open('GET', apiurl + '/buzz');
+xhr.responseType = 'json'; 
+
+xhr.onload = function() {
+  if (this.status == 200) {
+    var node;
+    var textnode;
+    var disptime;
+    for (x of this.response['items']) {
+      node = document.createElement('li');
+      disptime = new Date(x['datetime'])
+      textnode = document.createTextNode(disptime.getHours().toString().padStart(2, '0') + ':' + disptime.getMinutes().toString().padStart(2, '0') + ':' + disptime.getSeconds().toString().padStart(2, '0') + '.' + disptime.getMilliseconds().toString().padStart(3, '0') + ' - ' + x['person']);
+      node.appendChild(textnode);
+      document.getElementById('buzzes').appendChild(node);
+      since = x['datetime'];
+    }
+  }
+};
+
+xhr.send();
+
+}
+
+
+
+
+	</script>		
+</head>
+<body onload="doit()">
+	<p><a href="alex.html">Back to live buzzes</a></p>
+
+	<ul id="buzzes"></ul>
+
+</body>
+</html>

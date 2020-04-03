@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+ <title>Jeopardy</title>
+ <script src="config.js"></script>
+	<script>
+
+function buzz() {
+var xhr = new XMLHttpRequest();
+xhr.open('POST', apiurl + '/buzz');
+xhr.responseType = 'json'; 
+xhr.setRequestHeader("Content-Type", "application/json");
+
+xhr.onload = function() {
+if (this.status == 200) {
+    var node;
+    var textnode;
+    var disptime;
+    var x = this.response;
+      node = document.getElementById('status');
+      disptime = new Date(x['datetime'])
+      textnode = document.createTextNode("Successful buzz at " + disptime.getHours().toString().padStart(2, '0') + ':' + disptime.getMinutes().toString().padStart(2, '0') + ':' + disptime.getSeconds().toString().padStart(2, '0') + '.' + disptime.getMilliseconds().toString().padStart(3, '0'));
+      node.replaceChild(textnode, node.childNodes[0]);
+  }
+};
+
+xhr.send(JSON.stringify({person: document.getElementById("person").value}));
+}
+	</script>		
+</head>
+<body>
+	<p>Name:<input id="person" /><button onclick="buzz()">BUZZ</button></p>
+
+	<p id="status">No buzzes yet</p>
+
+
+</body>
+</html>
