@@ -6,7 +6,7 @@ function time2read(timemili) {
 
 function processbuzz(x) {
 	var node = document.createElement('li');
-	var textnode = document.createTextNode(time2read(x['datetime'] + ' - ' + x['person']);
+	var textnode = document.createTextNode(time2read(x['datetime']) + ' - ' + x['person']);
 	node.appendChild(textnode);
 	document.getElementById('buzzes').appendChild(node);
 	return x['datetime'];
