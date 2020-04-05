@@ -1,13 +1,10 @@
-swagger: "2.0"
+openapi: "3.0.2"
 info:
   description: "This is a spec for Jeopardy API."
   version: "0.1"
   title: "Jeopoardy Buzz API"
   contact:
     email: "engleman@gmail.com"
-schemes:
-- "https"
-- "http"
 tags:
 - name: "Buzz"
   description: "Mechanisms for buzzing in"
@@ -18,61 +15,63 @@ paths:
       - "Buzz"
       summary: "Buzz in"
       operationId: "addBuzz"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Buzz'
         description: "Info on the buzz"
         required: true
-        schema:
-          $ref: "#/definitions/Buzz"
       responses:
         200:
           description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buzz'
     get:
       tags:
       - "Buzz"
       summary: "Get recent buzzes"
       operationId: "getBuzz"
-      produces:
-      - "application/json"
       parameters:
       - name: "since"
         in: "query"
         description: "Only show buzzes sinnce given time"
         required: false
-        format: "int64"
-        type: "integer"
-        default: 0
+        schema:
+          format: "int64"
+          type: "integer"
+          default: 0
       responses:
         200:
           description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Buzz"
-definitions:
-  Buzz:
-    type: "object"
-    required:
-    - "person"
-    properties:
-      id:
-        description: "Internal ID"
-        type: "integer"
-        format: "int64"
-        example: 5
-        readOnly: true
-      person:
-        description: "Name of person who buzzed in"
-        type: "string"
-        example: "Christopher"
-      datetime:
-        readOnly: true
-        type: "integer"
-        format: "int64"
-        description: "Miliseconds since epoch"
-        example: 1585839749876
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Buzz"
+components:
+  schemas:
+    Buzz:
+      type: "object"
+      required:
+      - "person"
+      properties:
+        id:
+          description: "Internal ID"
+          type: "integer"
+          format: "int64"
+          example: 5
+          readOnly: true
+        person:
+          description: "Name of person who buzzed in"
+          type: "string"
+          example: "Christopher"
+        datetime:
+          readOnly: true
+          type: "integer"
+          format: "int64"
+          description: "Miliseconds since epoch"
+          example: 1585839749876
