@@ -1,74 +1,131 @@
-openapi: "3.0.2"
+openapi: 3.0.2
 info:
-  description: "This is a spec for Jeopardy API."
-  version: "0.1"
-  title: "Jeopoardy Buzz API"
+  description: This is a spec for Jeopardy API.
+  version: '0.1.2'
+  title: Jeopoardy Buzz API
   contact:
-    email: "engleman@gmail.com"
+    email: engleman@gmail.com
 tags:
-- name: "Buzz"
-  description: "Mechanisms for buzzing in"
+  - name: Buzz
+    description: Mechanisms for buzzing in
 paths:
   /buzz:
     post:
       tags:
-      - "Buzz"
-      summary: "Buzz in"
-      operationId: "addBuzz"
+        - Buzz
+      summary: Buzz in
+      operationId: addBuzz
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Buzz'
-        description: "Info on the buzz"
+        description: Info on the buzz
         required: true
       responses:
-        200:
-          description: "successful operation"
+        '200':
+          description: successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Buzz'
     get:
       tags:
-      - "Buzz"
-      summary: "Get recent buzzes"
-      operationId: "getBuzz"
+        - Buzz
+      summary: Get recent buzzes
+      operationId: getBuzz
       parameters:
-      - name: "since"
-        in: "query"
-        description: "Only show buzzes sinnce given time"
-        required: false
-        schema:
-          format: "int64"
-          type: "integer"
-          default: 0
+        - name: since
+          in: query
+          description: Only show buzzes since given time
+          required: false
+          schema:
+            format: int64
+            type: integer
+            default: 0
+            example: 1585839749876
+        - name: wait
+          in: query
+          description: Try to wait for a matching item to return request
+          required: false
+          schema:
+            type: boolean
+            default: false
       responses:
-        200:
-          description: "successful operation"
+        '200':
+          description: successful operation
           content:
             application/json:
               schema:
-                type: "object"
+                type: object
                 properties:
                   items:
-                    type: "array"
+                    type: array
                     items:
-                      $ref: "#/components/schemas/Buzz"
+                      $ref: '#/components/schemas/Buzz'
+  /buzz/flush:
+    post:
+      tags:
+        - Buzz
+      summary: Remove all buzzes from DB older than x
+      operationId: flushBuzz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                upto:
+                  type: integer
+                  format: int64
+                  description: Miliseconds since epoch
+                  example: 1585839749876
+      responses:
+        '200':
+          description: successful operation
+          content:
+            applicaiton/json:
+              schema:
+                type: object
+  /ping:
+    get:
+      tags:
+        - Buzz
+      summary: Test how long it takes to buzz
+      operationId: pingBuzz
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  datetime:
+                    type: integer
+                    format: int64
+                    description: Miliseconds since epoch
+                    example: 1585839749876
 components:
   schemas:
     Buzz:
-      type: "object"
+      type: object
       required:
-      - "person"
+        - person
       properties:
         person:
-          description: "Name of person who buzzed in"
-          type: "string"
-          example: "Christopher"
+          description: Name of person who buzzed in
+          type: string
+          example: Christopher
         datetime:
           readOnly: true
-          type: "integer"
-          format: "int64"
-          description: "Miliseconds since epoch"
+          type: integer
+          format: int64
+          description: Miliseconds since epoch
           example: 1585839749876
+        gameID:
+          description: Meaningless gameID
+          type: integer
+          format: int32
+          example: 0
+          default: 0

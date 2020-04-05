@@ -1,0 +1,18 @@
+Investigate CSS, especially issues on Chrome iOS?
+Examine TTLs in DynamoDB
+Shift DynamoDB to use gameID as partition key, datetime as sort key, and person as extra attribute
+Place DynamoDB schema into git repo
+Try using DynamoDB stream?
+Add 1 ms to time if duplicate
+Write ping frontend
+implement /buzz?wait=true and frontend
+Implement /buzz/flush and frontend
+Investigate using message based instead of DB backend; or RDS Aurora?
+Investigate SSE or Websocket
+Solve for Zoom latency?
+Make a buzz noise on Alex side?
+
+Teams, winner logic
+Final jeopardy mode, lock in submissions, etc
+
+Board and accounting
