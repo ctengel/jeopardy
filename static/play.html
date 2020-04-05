@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
  <title>Jeopardy</title>
+ <link rel="stylesheet" type="text/css" href="style.css" />
  <script src="common.js"></script>
  <script src="config.js"></script>
 	<script>
@@ -29,10 +30,12 @@ xhr.send(JSON.stringify({person: document.getElementById("person").value}));
 	</script>		
 </head>
 <body>
-	<p>Name:<input id="person" /><button onclick="buzz()">BUZZ</button></p>
-
-	<p id="status">No buzzes yet</p>
-
+	<div class="big">
+	<div class="top"><h1>JEOPARDY</h1></div>
+	<div class="who">Name: <input id="person" /></div>
+	<div class="press"><button onclick="buzz()">BUZZ</button></div>
+	<div class="status" id="status">No buzzes yet</div>
+	</div>
 
 </body>
 </html>
