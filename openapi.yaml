@@ -49,9 +49,12 @@ paths:
           content:
             application/json:
               schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/Buzz"
+                type: "object"
+                properties:
+                  items:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/Buzz"
 components:
   schemas:
     Buzz:
@@ -59,12 +62,6 @@ components:
       required:
       - "person"
       properties:
-        id:
-          description: "Internal ID"
-          type: "integer"
-          format: "int64"
-          example: 5
-          readOnly: true
         person:
           description: "Name of person who buzzed in"
           type: "string"
