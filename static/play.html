@@ -19,6 +19,7 @@ if (this.status == 200) {
       node = document.getElementById('status');
       textnode = document.createTextNode("Successful buzz at " + time2read(this.response['datetime']);
       node.replaceChild(textnode, node.childNodes[0]);
+      document.getElementById("person").attr("disabled", true)
   }
 };
 
